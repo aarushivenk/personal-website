@@ -1,0 +1,13 @@
+---
+import { site } from '../data/site';
+---
+<footer class="contact">
+  <h2>{site.footerHeadline}</h2>
+  <a href={`mailto:${site.email}`}>{site.email}</a>
+</footer>
+
+<style>
+  .contact { border-top: 1px solid var(--rule); padding-top: 48px; }
+  h2 { font-size: var(--fs-lg); }
+  a { display: inline-block; margin-top: 16px; font-size: var(--fs-sm); text-underline-offset: 3px; }
+</style>

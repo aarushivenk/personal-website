@@ -1,0 +1,17 @@
+---
+// A pulled-out key insight or quote.
+// <Callout label="Key insight">Customers wanted…</Callout>
+interface Props { label?: string }
+const { label } = Astro.props;
+---
+<aside class="callout">
+  {label && <p class="label">{label}</p>}
+  <div class="body"><slot /></div>
+</aside>
+
+<style>
+  .callout { margin: 48px 0; padding-left: 20px; border-left: 2px solid var(--text); }
+  .label { font-size: var(--fs-xs); color: var(--muted); margin-bottom: 8px !important; }
+  .body { font-size: var(--fs-lg); line-height: 1.4; color: var(--text); letter-spacing: -0.01em; }
+  .body :global(p:last-child) { margin-bottom: 0; }
+</style>

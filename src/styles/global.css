@@ -1,0 +1,85 @@
+@import '@fontsource-variable/inter';
+/* Font trial — the browser only downloads the one --font actually uses.
+   Delete the unused imports (and `npm uninstall` them) once you've picked. */
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/karla';
+@import '@fontsource-variable/nunito-sans';
+@import '@fontsource-variable/figtree';
+@import '@fontsource-variable/literata';
+
+/* ---------- Design tokens ---------- */
+:root {
+  --bg: #f6f5f1;
+  --surface: #ffffff;
+  --text: #161616;
+  --text-2: #3d3d3b;
+  --muted: #6e6d69;
+  --rule: #e3e1dc;
+
+  /* Project frame tints */
+  --tint-blue: #e5e9ec;
+  --tint-sand: #efe7df;
+  --tint-sage: #e0e8e3;
+  --tint-lilac: #e8e3ee;
+
+  /* Uncomment exactly one --font line (the last one wins). */
+  /* --font: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif; */
+  /* --font: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, sans-serif; */
+  /* --font: 'Karla Variable', ui-sans-serif, system-ui, -apple-system, sans-serif; */
+  --font: 'Nunito Sans Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* --font: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, sans-serif; */
+  /* --font: 'Literata Variable', ui-serif, Georgia, serif; */
+
+  /* Headings (h1–h3) and your name in the sidebar / top bar.
+     Uncomment exactly one; use `var(--font)` to match the body text. */
+  /* --font-heading: var(--font); */
+  /* --font-heading: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, sans-serif; */
+  /* --font-heading: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, sans-serif; */
+  /* --font-heading: 'Karla Variable', ui-sans-serif, system-ui, -apple-system, sans-serif; */
+  --font-heading: 'Nunito Sans Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  /* --font-heading: 'Figtree Variable', ui-sans-serif, system-ui, -apple-system, sans-serif; */
+  /* --font-heading: 'Literata Variable', ui-serif, Georgia, serif; */
+
+  --fs-xs: 0.8125rem;  /* 13 */
+  --fs-sm: 0.875rem;   /* 14 */
+  --fs-base: 1rem;     /* 16 */
+  --fs-md: 1.0625rem;  /* 17 */
+  --fs-lg: 1.375rem;   /* 22 */
+  --fs-xl: 2.25rem;    /* 36 */
+  --fs-2xl: clamp(2.25rem, 5vw, 3.5rem);
+
+  --radius: 12px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --page-max: 1120px;
+  --read-max: 680px;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-base);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'cv11', 'ss01';
+}
+img, video { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-weight: 500; letter-spacing: -0.015em; }
+h1, h2, h3, .name { font-family: var(--font-heading); }
+
+:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; border-radius: 4px; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

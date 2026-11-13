@@ -1,0 +1,113 @@
+---
+title: Interface Designer
+summary: Reimagining how low-code developers build websites in Appian.
+company: Appian
+years: "2024 - 2025"
+tags: [Product design, Developer tools]
+tint: lilac
+order: 4
+role: Primary designer
+timeline: "Dec 2024 – Dec 2025"
+# team: "[e.g. 1 PM, 1 designer, 1 content writer, N engineers]"
+cover: ./images/interface-designer/thumbnail.png
+coverAlt: The redesigned Interface Designer
+coverBleed: true
+coverOnPage: false
+---
+
+import Figure from '../../components/case/Figure.astro';
+import TwoUp from '../../components/case/TwoUp.astro';
+import Callout from '../../components/case/Callout.astro';
+import Stats from '../../components/case/Stats.astro';
+import before from './images/interface-designer/before.png';
+import cardSort from './images/interface-designer/card-sort.png';
+import tabsVsList from './images/interface-designer/tabs-vs-list.png';
+import explorations from './images/interface-designer/explorations.png';
+import after from './images/interface-designer/after.png';
+
+## The problem
+
+Interface Designer is where Appian developers build the screens their own users
+see. It's a drag-and-drop editor that had barely changed in a decade. Experts
+could make something beautiful in it. Everyone else made something functional and
+stopped there.
+
+<Figure
+  src={before}
+  tint="lilac"
+  alt="The old Interface Designer: a component palette on the left, a home page being built in the center, and a long list of settings for the selected component on the right"
+  caption="Interface Designer before the redesign"
+/>
+
+My PM and I talked to developers, studied competitors, and built in the tool
+ourselves. Three things kept coming up: it was slow, the settings were buried in
+long nested lists, and it looked dated next to the tools developers used
+everywhere else. Most people avoided the no-code controls entirely and wrote code
+instead.
+
+<Callout label="Key insight">
+  Before a group can agree on a design, it has to agree on what the design should
+  make people feel.
+</Callout>
+
+## What I did
+
+The editor had over 300 configuration settings, all in one long scrolling list.
+Card sorting showed clear categories, but the team was split: group them into
+tabs (more clicks) or keep one list (more scrolling)? A/B testing came back
+mixed, and we didn't have time to build both. So I walked the team through real
+user flows, and tabs won. Our content writer and I then placed every one of the
+300 settings into a category. In usability testing, one developer said they used
+the tabs several times without even realizing they were new.
+
+<TwoUp>
+  <Figure
+    src={cardSort}
+    tint="lilac"
+    width="text"
+    alt="A card sorting exercise: instructions on the left and sticky notes for settings like Show when, Margin below, Label and Required message on the right"
+    caption="Card sorting the editor's settings into categories"
+  />
+  <Figure
+    src={tabsVsList}
+    tint="lilac"
+    width="text"
+    alt="Two versions of the settings panel side by side: one splits settings into Design and Data tabs, the other keeps every category in one collapsible list"
+    caption="The two options we tested: tabs (left) or one list (right)"
+  />
+</TwoUp>
+
+### Thinking past the panel
+
+Tabs versus one long list wasn't the only decision on the table. Each change to Interface Designer raised a bigger question: what should building in Appian feel like a few years from now, and where should the platform grow next?
+So we sketched that future first: an editor that's AI-first, with intuitive visual controls and fast performance. Then we worked backward into a release plan. That vision decided what shipped first and what waited, so each release moved us toward it instead of just solving today's problems.
+
+<Figure
+  src={explorations}
+  tint="lilac"
+  alt="A grid of vision slides alternating between problem statements, such as Interface Designer is too slow, and early mockups of the redesigned editor"
+  caption="Vision work mapping each problem to early design explorations"
+/>
+
+## Outcome
+
+The new Interface Designer launched at Appian World 2025, and engineering made it
+dramatically faster at the same time. One solutions engineer told us they used to
+keep it out of customer demos and now they're comfortable showing it.
+
+<Stats items={[
+  { value: '3x', label: 'faster initial load' },
+  { value: '3x', label: 'faster preview' },
+  { value: '2.75x', label: 'faster drag and drop' },
+]} />
+
+<Figure
+  src={after}
+  tint="lilac"
+  alt="The redesigned Interface Designer: a refreshed header, and the selected component's settings split into Content, Behavior and Styling tabs with visual controls for alignment, margins and shape"
+  caption="The new Interface Designer, launched at Appian World 2025"
+/>
+
+## What I learned
+
+We made Interface Designer faster and easier to use, but the definition of a modern tool shifted under us as AI changed what developers expect. The lesson I took: design for where the product is going, and plan to keep revisiting it.

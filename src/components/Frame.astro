@@ -1,0 +1,61 @@
+---
+// A tinted rounded frame holding a screenshot (or a placeholder "app window"
+// until you add one). Used for project cards and case study covers.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+export type Tint = 'blue' | 'sand' | 'sage' | 'lilac';
+
+interface Props {
+  tint?: Tint;
+  image?: ImageMetadata;
+  alt?: string;
+  /** 'card' = home list ratio; 'wide' = case study cover */
+  shape?: 'card' | 'wide';
+  /** true = image fills the frame edge to edge (for designed thumbnails) */
+  bleed?: boolean;
+}
+const { tint = 'blue', image, alt = '', shape = 'card', bleed = false } = Astro.props;
+---
+<div class:list={['frame', `shape-${shape}`, { bleed: bleed && image }]} style={`--tint: var(--tint-${tint})`}>
+  {image ? (
+    <Image src={image} alt={alt} class="shot" widths={[640, 960, 1400, 2000]} sizes="(max-width: 860px) 100vw, 800px" />
+  ) : (
+    <div class="placeholder" aria-hidden="true">
+      <span class="bar b1"></span><span class="bar b2"></span><span class="bar b3"></span>
+    </div>
+  )}
+</div>
+
+<style>
+  .frame {
+    background: var(--tint);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 14% 12% 0;
+  }
+  .shape-card { aspect-ratio: 4 / 3; }
+  .shape-wide { aspect-ratio: 16 / 9; padding: 7% 14% 0; }
+
+  .shot, .placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.04), 0 12px 40px -12px rgb(0 0 0 / 0.12);
+  }
+  .shot { object-fit: cover; object-position: top; }
+  .frame.bleed { padding: 0; }
+  .bleed .shot { border-radius: 0; box-shadow: none; object-position: center; }
+  .placeholder {
+    background: var(--surface);
+    padding: 3.5% 3.5%;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .bar { height: 7px; border-radius: 4px; background: #e6e5e1; display: block; }
+  .b1 { width: 28%; background: #cfceca; }
+  .b2 { width: 73%; }
+  .b3 { width: 52%; }
+</style>

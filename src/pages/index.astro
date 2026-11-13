@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import Split from '../layouts/Split.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ContactFooter from '../components/ContactFooter.astro';
+
+const projects = (await getCollection('work', (p) => !p.data.draft))
+  .sort((a, b) => a.data.order - b.data.order);
+---
+<Split>
+  <h1 class="visually-hidden">Selected work</h1>
+  <div class="list">
+    {projects.map((p) => <ProjectCard project={p} />)}
+  </div>
+  <div class="foot"><ContactFooter /></div>
+</Split>
+
+<style>
+  .list { display: flex; flex-direction: column; gap: 64px; }
+  .foot { margin-top: 72px; }
+</style>

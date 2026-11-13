@@ -1,0 +1,60 @@
+---
+import Split from '../layouts/Split.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/headshot.jpg';
+---
+<Split title="About">
+  <Image
+    src={portrait}
+    alt="Headshot of Aarushi smiling"
+    widths={[480, 840]}
+    sizes="(max-width: 520px) 100vw, 420px"
+    class="portrait"
+    loading="eager"
+  />
+
+  <h1>Hi, I'm Aarushi.</h1>
+
+  <div class="bio">
+    <p>
+      I'm a product designer turned PM, who loves solving problems in unexpected
+      ways. I graduated from Duke with a degree in Computer Science and a minor
+      in Visual Media Studies, which has helped me think about problems in truly
+      multi-disciplinary ways.
+    </p>
+    <p>
+      Currently, I lead product and design at Polimorphic, helping governments
+      serve their constituents better every day.
+    </p>
+    <p>
+      Previously, as a UX designer at Appian, I overhauled our tools to focus on
+      speeding up the first time onboarding experience and overall time to go-live.
+    </p>
+    <p>
+      When I'm not at my desk, I love trying out new recipes, going to broadway shows, and doing bakery
+      crawls across NYC.
+    </p>
+  </div>
+
+</Split>
+
+<style>
+  .portrait {
+    display: block; width: 100%; max-width: 420px; height: auto;
+    aspect-ratio: 3 / 4; object-fit: cover;
+    background: var(--tint-sand); border-radius: var(--radius);
+  }
+
+  h1 { font-size: var(--fs-xl); letter-spacing: -0.025em; margin-top: 56px; }
+  .bio { margin-top: 28px; font-size: var(--fs-md); line-height: 1.65; display: flex; flex-direction: column; gap: 16px; max-width: 62ch; }
+
+  .facts { margin: 56px 0 0; }
+  .facts > div {
+    display: grid; grid-template-columns: 144px 1fr; gap: 16px;
+    border-top: 1px solid var(--rule); padding: 14px 0; font-size: var(--fs-sm);
+  }
+  .facts > div:last-child { border-bottom: 1px solid var(--rule); }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+  @media (max-width: 520px) { .facts > div { grid-template-columns: 100px 1fr; } }
+</style>

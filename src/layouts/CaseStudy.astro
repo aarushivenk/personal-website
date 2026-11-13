@@ -1,0 +1,119 @@
+---
+// Full-width reading view for a single case study.
+import type { CollectionEntry } from 'astro:content';
+import Base from './Base.astro';
+import Frame from '../components/Frame.astro';
+import ContactFooter from '../components/ContactFooter.astro';
+import { site } from '../data/site';
+
+interface Props {
+  project: CollectionEntry<'work'>;
+  next?: CollectionEntry<'work'>;
+}
+const { project, next } = Astro.props;
+const d = project.data;
+
+const lines = (v?: string | string[]) => (v == null ? [] : [v].flat());
+const facts = ([
+  ['Role', lines(d.role)],
+  ['Company', d.company === d.title ? [] : [d.company]],
+  ['Team', lines(d.team)],
+  ['Duration', [d.timeline ?? d.years]],
+  ['Tools', lines(d.tools)],
+] as const).filter(([, v]) => v.length);
+---
+<Base title={d.title} description={d.summary}>
+  <header class="topbar">
+    <a href="/" class="name">{site.name}</a>
+    <a href="/" class="back"><span aria-hidden="true">←</span> All work</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">{d.tags.join(' / ')}</p>
+      <h1>{d.title}</h1>
+      {d.intro
+        ? <p class="intro">{d.intro}{d.introCta && <><br /><strong>{d.introCta}</strong></>}</p>
+        : <p class="lede">{d.summary}</p>}
+
+      <dl class="facts">
+        {facts.map(([k, v]) => (
+          <div><dt>{k}</dt>{v.map((line) => <dd>{line}</dd>)}</div>
+        ))}
+      </dl>
+    </section>
+
+    {d.coverOnPage && (
+      <div class="cover">
+        <Frame tint={d.tint} image={d.cover} alt={d.coverAlt} bleed={d.coverBleed} shape="wide" />
+      </div>
+    )}
+
+    <article class="prose">
+      <slot />
+    </article>
+
+    {next && (
+      <nav class="next" aria-label="Next project">
+        <div class="next-inner">
+          <p class="eyebrow">Next project</p>
+          <a href={`/work/${next.id}/`}>
+            <span class="next-title">{next.data.title}</span>
+            <span class="next-meta">{next.data.company}, {next.data.years}</span>
+          </a>
+        </div>
+      </nav>
+    )}
+
+    <div class="foot"><ContactFooter /></div>
+  </main>
+</Base>
+
+<style>
+  .topbar, :where(main) > * { max-width: var(--page-max); margin-inline: auto; padding-inline: var(--gutter); }
+
+  .topbar {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding-top: 32px; padding-bottom: 32px;
+    font-size: var(--fs-sm);
+  }
+  .topbar a { text-decoration: none; }
+  .name { font-weight: 500; }
+  .back { color: var(--muted); transition: color .15s; }
+  .back:hover { color: var(--text); }
+
+  .hero { padding-top: clamp(32px, 8vw, 96px); padding-bottom: 48px; }
+  .eyebrow { font-size: var(--fs-xs); color: var(--muted); }
+  h1 { font-size: var(--fs-2xl); line-height: 1.05; letter-spacing: -0.03em; margin-top: 14px; max-width: 18ch; }
+  .lede { margin-top: 20px; font-size: var(--fs-lg); line-height: 1.4; color: var(--text-2); max-width: 36ch; }
+
+  .facts {
+    margin: 48px 0 0; display: grid; gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    border-top: 1px solid var(--rule); padding-top: 20px;
+  }
+  dt { font-size: var(--fs-xs); color: var(--muted); }
+  .intro strong { font-weight: 600; color: var(--text); }
+  .intro { margin-top: 24px; font-size: var(--fs-md); line-height: 1.65; color: var(--text-2); max-width: 72ch; }
+  dd { margin: 4px 0 0; font-size: var(--fs-sm); }
+
+  .cover { margin-bottom: clamp(56px, 8vw, 96px); }
+
+  /* Body copy: narrow centered column; components can break out wider. */
+  .prose { max-width: calc(var(--read-max) + 2 * var(--gutter)); font-size: var(--fs-md); line-height: 1.65; color: var(--text-2); }
+  .prose :global(h2) { font-size: var(--fs-lg); color: var(--text); margin: 72px 0 16px; }
+  .prose :global(h3) { font-size: var(--fs-md); color: var(--text); margin: 40px 0 8px; }
+  .prose :global(p) { margin: 0 0 1.1em; }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.2em; margin: 0 0 1.1em; }
+  .prose :global(li) { margin-bottom: .4em; }
+  .prose :global(> :first-child) { margin-top: 0; }
+
+  .next { margin-top: 96px; }
+  .next-inner { border-top: 1px solid var(--rule); padding: 32px 0; }
+  .next a { display: flex; flex-direction: column; gap: 4px; text-decoration: none; margin-top: 10px; }
+  .next-title { font-size: var(--fs-xl); letter-spacing: -0.02em; line-height: 1.15; }
+  .next a:hover .next-title { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
+  .next-meta { font-size: var(--fs-sm); color: var(--muted); }
+
+  .foot { padding-top: 32px; padding-bottom: 96px; }
+</style>

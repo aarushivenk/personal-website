@@ -1,0 +1,48 @@
+---
+import { site } from '../data/site';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isWork = path === '/' || path.startsWith('/work');
+const isAbout = path === '/about';
+---
+<aside class="sidebar">
+  <div class="id">
+    <a href="/" class="name">{site.name}</a>
+    <p class="meta">
+      {site.role}<br />
+      Currently at <a href={site.company.url} target="_blank" rel="noopener">{site.company.name}</a>, {site.company.note}<br />
+      Based in {site.location}
+    </p>
+  </div>
+
+  <nav aria-label="Primary">
+    <ul>
+      <li><a href="/" aria-current={isWork ? 'page' : undefined}>Work</a></li>
+      <li><a href="/about" aria-current={isAbout ? 'page' : undefined}>About</a></li>
+      <li><a href={site.resume} target="_blank" rel="noopener">Resume</a></li>
+      <li><a href={site.linkedin} target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href={`mailto:${site.email}`} class="email">{site.email}</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<style>
+  .sidebar { display: flex; flex-direction: column; gap: 40px; }
+  .name { display: block; font-size: 1.75rem; line-height: 1.15; letter-spacing: -0.02em; font-weight: 500; text-decoration: none; }
+  .meta { margin-top: 14px; color: var(--muted); font-size: var(--fs-sm); line-height: 1.6; }
+  .meta a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: color .15s; }
+  .meta a:hover { color: var(--text); }
+
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+  nav a { font-size: var(--fs-sm); text-decoration: none; color: var(--text); transition: color .15s; }
+  nav a:hover { color: var(--muted); }
+  nav a[aria-current='page'] { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+  .email { color: var(--muted); }
+  .email:hover { color: var(--text); }
+
+  @media (max-width: 860px) {
+    .sidebar { gap: 24px; }
+    ul { flex-direction: row; flex-wrap: wrap; gap: 8px 20px; }
+    li:last-child { flex-basis: 100%; }
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+// Two-column layout used by Work (home) and About:
+// sticky identity/nav sidebar on the left, scrolling content on the right.
+import Base from './Base.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+---
+<Base title={title} description={description}>
+  <div class="split">
+    <div class="side" transition:name="sidebar" transition:animate="none"><Sidebar /></div>
+    <main class="main"><slot /></main>
+  </div>
+</Base>
+
+<style>
+  .split {
+    max-width: var(--page-max);
+    margin: 0 auto;
+    padding: 48px var(--gutter) 96px;
+    display: grid;
+    grid-template-columns: minmax(240px, 300px) minmax(0, 1fr);
+    gap: clamp(48px, 7vw, 112px);
+  }
+  .side { position: sticky; top: 48px; align-self: start; }
+
+  @media (max-width: 860px) {
+    .split { grid-template-columns: 1fr; gap: 48px; padding-top: 32px; }
+    .side { position: static; }
+  }
+</style>

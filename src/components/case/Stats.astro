@@ -1,0 +1,21 @@
+---
+// A row of outcome numbers.
+// <Stats items={[{ value: '60%', label: 'fewer setup tickets' }]} />
+interface Props { items: { value: string; label: string }[] }
+const { items } = Astro.props;
+---
+<dl class="stats">
+  {items.map((s) => (
+    <div><dt>{s.value}</dt><dd>{s.label}</dd></div>
+  ))}
+</dl>
+
+<style>
+  .stats {
+    margin: 48px 0; display: grid; gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+  .stats > div { border-top: 1px solid var(--rule); padding-top: 16px; }
+  dt { font-size: var(--fs-xl); letter-spacing: -0.03em; color: var(--text); line-height: 1.1; }
+  dd { margin: 6px 0 0; font-size: var(--fs-sm); color: var(--muted); }
+</style>

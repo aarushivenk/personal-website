@@ -1,0 +1,15 @@
+---
+// Two things side by side at page width (e.g. before/after).
+// <TwoUp><Figure width="text" … /><Figure width="text" … /></TwoUp>
+---
+<div class="twoup"><slot /></div>
+
+<style>
+  .twoup {
+    width: min(calc(var(--page-max) - 2 * var(--gutter)), calc(100vw - 2 * var(--gutter)));
+    position: relative; left: 50%; transform: translateX(-50%);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 48px 0;
+  }
+  .twoup :global(.fig) { margin: 0; }
+  @media (max-width: 700px) { .twoup { grid-template-columns: 1fr; } }
+</style>

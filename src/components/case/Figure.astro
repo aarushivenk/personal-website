@@ -1,0 +1,43 @@
+---
+// An image in a case study, optionally breaking out wider than the text column.
+// <Figure src={img} alt="…" caption="…" width="wide" tint="sand" />
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+
+interface Props {
+  src?: ImageMetadata;
+  alt?: string;
+  caption?: string;
+  /** text = column width, wide = page width */
+  width?: 'text' | 'wide';
+  /** Put the image on a tinted panel, like the home page cards */
+  tint?: 'blue' | 'sand' | 'sage' | 'lilac';
+}
+const { src, alt = '', caption, width = 'wide', tint } = Astro.props;
+---
+<figure class:list={['fig', `w-${width}`, tint && 'tinted']} style={tint ? `--tint: var(--tint-${tint})` : undefined}>
+  <div class="media">
+    {src
+      ? <Image src={src} alt={alt} widths={[640, 1000, 1600, 2200]} sizes="(max-width: 860px) 100vw, 1100px" />
+      : <div class="ph" aria-hidden="true">Image placeholder</div>}
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .fig { margin: 48px 0; }
+  .w-wide {
+    width: min(calc(var(--page-max) - 2 * var(--gutter)), calc(100vw - 2 * var(--gutter)));
+    position: relative; left: 50%; transform: translateX(-50%);
+  }
+  .media { border-radius: var(--radius); overflow: hidden; }
+  .tinted .media { background: var(--tint); padding: clamp(20px, 6%, 64px); }
+  .media :global(img) { display: block; width: 100%; height: auto; }
+  .tinted .media :global(img) { border-radius: 8px; box-shadow: 0 12px 40px -12px rgb(0 0 0 / .14); }
+  .ph {
+    aspect-ratio: 16 / 9; background: var(--surface); border: 1px dashed var(--rule);
+    display: grid; place-items: center; color: var(--muted); font-size: var(--fs-xs);
+    border-radius: 8px;
+  }
+  figcaption { margin-top: 12px; font-size: var(--fs-xs); color: var(--muted); max-width: var(--read-max); }
+</style>
