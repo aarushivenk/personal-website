@@ -3,6 +3,6 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 
 export default defineConfig({
-  site: 'https://aarushiv.com',
+  site: 'https://aarushivenk.com',
   integrations: [mdx()],
 });
